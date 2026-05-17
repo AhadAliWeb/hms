@@ -112,23 +112,23 @@ app.UseDefaultFiles();   // serves index.html automatically
 app.UseStaticFiles();    // enables wwwroot
 
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
-//     try
-//     {
-//         await DataSeeder.SeedAsync(context);
-//         Console.WriteLine("Seeding completed");
-//     }
-//     catch (Exception ex)
-//     {
-//         Console.WriteLine($"Seeding error: {ex.Message}");
-//     }
-// }
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    try
+    {
+        await DataSeeder.SeedAsync(context);
+        Console.WriteLine("Seeding completed");
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Seeding error: {ex.Message}");
+    }
+}
 
-// using (var scope = app.Services.CreateScope())
-// {
-//     var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
     // if (!context.Users.Any(u => u.Role == "Admin"))
     // {
@@ -146,30 +146,30 @@ app.UseStaticFiles();    // enables wwwroot
     //     await context.SaveChangesAsync();
     // }
 
-//     var usersToSeed = new[]
-// {
-//     new User { FullName = "Admin", Email = "admin@hospital.com", Role = "Admin", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123") },
-//     new User { FullName = "Receptionist", Email = "receptionist@hospital.com", Role = "Receptionist", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Receptionist@123") },
-//     new User { FullName = "Nurse", Email = "nurse@hospital.com", Role = "Nurse", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Nurse@123") },
-//     new User { FullName = "Pharmacist", Email = "pharmacist@hospital.com", Role = "Pharmacist", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pharmacist@123") },
-//     new User { FullName = "Lab Technician", Email = "lab@hospital.com", Role = "LabTechnician", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lab@123") },
-//     new User { FullName = "Accountant", Email = "accountant@hospital.com", Role = "Accountant", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Accountant@123") },
-// };
+    var usersToSeed = new[]
+{
+    new User { FullName = "Admin", Email = "admin@hospital.com", Role = "Admin", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Admin@123") },
+    new User { FullName = "Receptionist", Email = "receptionist@hospital.com", Role = "Receptionist", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Receptionist@123") },
+    new User { FullName = "Nurse", Email = "nurse@hospital.com", Role = "Nurse", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Nurse@123") },
+    new User { FullName = "Pharmacist", Email = "pharmacist@hospital.com", Role = "Pharmacist", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Pharmacist@123") },
+    new User { FullName = "Lab Technician", Email = "lab@hospital.com", Role = "LabTechnician", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Lab@123") },
+    new User { FullName = "Accountant", Email = "accountant@hospital.com", Role = "Accountant", PasswordHash = BCrypt.Net.BCrypt.HashPassword("Accountant@123") },
+};
 
-// foreach (var u in usersToSeed)
-// {
-//     if (!context.Users.Any(x => x.Email == u.Email))
-//     {
-//         u.IsActive = true;
-//         u.CreatedAt = DateTime.UtcNow;
-//         context.Users.Add(u);
-//     }
-// }
+foreach (var u in usersToSeed)
+{
+    if (!context.Users.Any(x => x.Email == u.Email))
+    {
+        u.IsActive = true;
+        u.CreatedAt = DateTime.UtcNow;
+        context.Users.Add(u);
+    }
+}
 
-// await context.SaveChangesAsync();
+await context.SaveChangesAsync();
 
     
-// }
+}
 
 
 
