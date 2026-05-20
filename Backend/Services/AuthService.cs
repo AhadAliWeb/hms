@@ -27,6 +27,9 @@ namespace Backend.Services
 
         public async Task<int> RegisterAsync(RegisterDto dto)
         {
+            if (await _context.Users.AnyAsync(u => u.Email == dto.Email))
+                throw new InvalidOperationException("Email already exists");
+
             var user = new User
             {
                 FullName = dto.FullName,
