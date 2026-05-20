@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { login } from '../../api/authApi';
 import { setCredentials } from '../../store/slices/authSlice';
-import { Activity, Eye, EyeOff } from 'lucide-react';
+import { Activity, Eye, EyeOff, Shield, Stethoscope, Phone, Heart, Pill, Calculator } from 'lucide-react';
 
 const ROLE_ROUTES = {
   Admin:         '/admin/dashboard',
@@ -16,6 +16,15 @@ const ROLE_ROUTES = {
   Accountant:    '/accountant/dashboard',
   Patient:       '/patient/appointments',
 };
+
+const DEMO_ACCOUNTS = [
+  { name: 'Admin',        email: 'admin@hospital.com',        password: 'Admin@123',        icon: Shield },
+  { name: 'Doctor',       email: 'doctor@hospital.com',       password: 'Doctor@123',       icon: Stethoscope },
+  { name: 'Receptionist', email: 'receptionist@hospital.com', password: 'Receptionist@123', icon: Phone },
+  { name: 'Nurse',        email: 'nurse@hospital.com',        password: 'Nurse@123',        icon: Heart },
+  { name: 'Pharmacist',   email: 'pharmacist@hospital.com',   password: 'Pharmacist@123',   icon: Pill },
+  { name: 'Accountant',   email: 'accountant@hospital.com',   password: 'Accountant@123',   icon: Calculator },
+];
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -114,6 +123,33 @@ export default function Login() {
               {loading ? 'Signing in…' : 'Sign in'}
             </button>
           </form>
+        </div>
+        {/* Demo accounts */}
+        <div className="mt-6">
+          <p className="text-[11px] font-medium text-gray-400 uppercase tracking-wide mb-3">
+            Quick fill — demo accounts
+          </p>
+          <div className="grid grid-cols-2 gap-2 sm:grid-cols-3">
+            {DEMO_ACCOUNTS.map(({ name, email, password, icon: Icon }) => (
+              <button
+                key={name}
+                type="button"
+                onClick={() => {
+                  setForm({ email, password });
+                  setError('');
+                }}
+                className="flex flex-col items-start gap-1 p-2.5 rounded-lg border border-gray-200 hover:border-blue-400 hover:bg-blue-50 transition-colors text-left group"
+              >
+                <Icon size={15} className="text-gray-400 group-hover:text-blue-500" />
+                <span className="text-xs font-medium text-gray-700 group-hover:text-blue-700 leading-none">
+                  {name}
+                </span>
+                <span className="text-[10px] text-gray-400 group-hover:text-blue-500 font-mono truncate w-full">
+                  {email}
+                </span>
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </div>
